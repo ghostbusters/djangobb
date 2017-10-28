@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from haystack.query import SearchQuerySet, SQ
+# from haystack.query import SearchQuerySet, SQ
 
 from djangobb_forum import settings as forum_settings
 from djangobb_forum.forms import AddPostForm, EditPostForm, UserSearchForm, \
@@ -219,7 +219,7 @@ def search(request):
         sort_by = form.cleaned_data['sort_by']
         sort_dir = form.cleaned_data['sort_dir']
 
-        query = SearchQuerySet().models(Post)
+        query = Post.objects.all()
 
         if author:
             query = query.filter(author__username=author)
@@ -227,13 +227,13 @@ def search(request):
         if forum != '0':
             query = query.filter(forum__id=forum)
 
-        if keywords:
-            if search_in == 'all':
-                query = query.filter(SQ(topic=keywords) | SQ(text=keywords))
-            elif search_in == 'message':
-                query = query.filter(text=keywords)
-            elif search_in == 'topic':
-                query = query.filter(topic=keywords)
+        # if keywords:
+        #     if search_in == 'all':
+        #         query = query.filter(SQ(topic=keywords) | SQ(text=keywords))
+        #     elif search_in == 'message':
+        #         query = query.filter(text=keywords)
+        #     elif search_in == 'topic':
+        #         query = query.filter(topic=keywords)
 
         order = {'0': 'created',
                  '1': 'author',
