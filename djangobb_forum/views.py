@@ -36,6 +36,26 @@ from djangobb_forum.util import build_form, smiles, convert_text_to_html, get_pa
 
 User = get_user_model()
 
+def simple_index(request):
+    forums = Forum.objects.all()
+    user = request.user
+    if not user.is_superuser:
+        user_groups = user.groups.all() or []
+        forums = forums.filter(
+            Q(category__groups__in=user_groups) |
+            Q(category__groups__isnull=True)
+        )
+
+    forums = forums.select_related(
+        'last_post__topic',
+        'last_post__user',
+        'category'
+    )
+
+    return render(request, 'djangobb_forum/simple_index.html', {
+        'forums': forums
+    })
+
 def index(request, full=True):
     users_cached = cache.get('djangobb_users_online', {})
     users_online = users_cached and User.objects.filter(id__in=users_cached.keys()) or []
