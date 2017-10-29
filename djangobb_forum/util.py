@@ -35,9 +35,11 @@ def absolute_url(path):
     return 'http://%s%s' % (Site.objects.get_current().domain, path)
 
 
-def get_page(objects, request, size):
+def get_page(objects, request, size, page=None):
     try:
-        return Paginator(objects, size).page(request.GET.get('page', 1))
+        if not page:
+            page = request.GET('page', 1)
+        return Paginator(objects, size).page(page)
     except InvalidPage:
         return None
 
