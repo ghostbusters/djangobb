@@ -11,6 +11,7 @@ from django.db import models
 from django.db.models import aggregates
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -111,7 +112,13 @@ class Forum(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('djangobb:forum', args=[self.id])
+        return reverse('djangobb:forum', kwargs={
+            'forum_id': self.id,
+            'slug': self.get_slug()
+        })
+
+    def get_slug(self):
+        return slugify(self.name)[:50]
 
     @property
     def posts(self):

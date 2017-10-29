@@ -14,7 +14,7 @@ urlpatterns = [
     # Forum
     # url('^$', forum_views.index, name='index'),
     url('^$', forum_views.simple_index, name='index'),
-    url('^(?P<forum_id>\d+)/$', forum_views.show_forum, name='forum'),
+    url('^f/(?P<slug>[-\w]+)-(?P<forum_id>\d+)/$', forum_views.show_forum, name='forum'),
     url('^moderate/(?P<forum_id>\d+)/$', forum_views.moderate, name='moderate'),
     url('^search/$', forum_views.search, name='search'),
     url('^misc/$', forum_views.misc, name='misc'),

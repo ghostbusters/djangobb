@@ -354,10 +354,15 @@ def misc(request):
                 )
 
 
-def show_forum(request, forum_id, full=True):
+def show_forum(request, forum_id, slug='', full=True):
     forum = get_object_or_404(Forum, pk=forum_id)
     if not forum.category.has_access(request.user):
         raise PermissionDenied
+    if slug != forum.get_slug():
+        return HttpResponseRedirect(reverse('djangobb:forum', kwargs={
+            'forum_id': forum_id,
+            'slug': forum.get_slug()
+        }))
     topics = forum.topics.order_by('-sticky', '-updated').select_related()
     moderator = request.user.is_superuser or\
         request.user in forum.moderators.all()
