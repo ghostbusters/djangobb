@@ -55,7 +55,9 @@ urlpatterns = [
     url('^users/$', forum_views.users, name='forum_users'),
 
     # Topic
-    url('^topic/(?P<topic_id>\d+)/$', forum_views.show_topic, name='topic'),
+    # url('^topic/(?P<topic_id>\d+)/$', forum_views.show_topic, name='topic'),
+    url('^t/(?P<slug>[-\w]+)-(?P<topic_id>\d+)/$', forum_views.show_topic, name='topic'),
+    url('^t/(?P<slug>[-\w]+)-(?P<topic_id>\d+)/page/(?P<page>\d+)/$', forum_views.show_topic, name='topic_pagination'),
     url('^(?P<forum_id>\d+)/topic/add/$', forum_views.add_topic, name='add_topic'),
     url('^topic/(?P<topic_id>\d+)/delete_posts/$', forum_views.delete_posts, name='delete_posts'),
     url('^topic/move/$', forum_views.move_topic, name='move_topic'),

@@ -178,7 +178,14 @@ class Topic(models.Model):
         return self.post_count - 1
 
     def get_absolute_url(self):
-        return reverse('djangobb:topic', args=[self.id])
+        return reverse(
+            'djangobb:topic', kwargs={
+                'topic_id': self.id,
+                'slug': self.get_slug()
+            })
+
+    def get_slug(self):
+        return slugify(self.name)[:50]
 
     def update_read(self, user):
         tracking = user.posttracking

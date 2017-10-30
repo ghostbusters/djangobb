@@ -393,7 +393,7 @@ def show_forum(request, forum_id, slug='', page=1, full=True):
 
 
 @transaction.atomic
-def show_topic(request, topic_id, full=True):
+def show_topic(request, topic_id, slug='', page=1, full=True):
     """
     * Display a topic
     * save a reply
@@ -410,6 +410,18 @@ def show_topic(request, topic_id, full=True):
     topic = get_object_or_404(Topic.objects.select_related(), pk=topic_id)
     if not topic.forum.category.has_access(request.user):
         raise PermissionDenied
+    if slug != topic.get_slug():
+        if page > 1:
+            return HttpResponseRedirect(reverse('djangobb:topic_pagination', kwargs={
+                'topic_id': topic_id,
+                'slug': topic.get_slug(),
+                'page': page
+            }))
+        else:
+            return HttpResponseRedirect(reverse('djangobb:topic', kwargs={
+                'topic_id': topic_id,
+                'slug': topic.get_slug()
+            }))    
     Topic.objects.filter(pk=topic.id).update(views=F('views') + 1)
 
     last_post = topic.last_post
@@ -483,7 +495,7 @@ def show_topic(request, topic_id, full=True):
     view_data = {
         'categories': Category.objects.all(),
         'topic': topic,
-        'posts_page': get_page(posts, request, forum_settings.TOPIC_PAGE_SIZE),
+        'posts_page': get_page(posts, request, forum_settings.TOPIC_PAGE_SIZE, page=page),
         'poll': poll,
         'poll_form': poll_form,
     }
