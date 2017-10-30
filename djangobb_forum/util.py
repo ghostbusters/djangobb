@@ -38,7 +38,7 @@ def absolute_url(path):
 def get_page(objects, request, size, page=None):
     try:
         if not page:
-            page = request.GET('page', 1)
+            page = request.GET.get('page', 1)
         return Paginator(objects, size).page(page)
     except InvalidPage:
         return None
