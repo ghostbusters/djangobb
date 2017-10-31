@@ -669,7 +669,12 @@ def show_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     count = post.topic.posts.filter(created__lt=post.created).count() + 1
     page = math.ceil(count / float(forum_settings.TOPIC_PAGE_SIZE))
-    url = '%s?page=%d#post-%d' % (reverse('djangobb:topic', args=[post.topic.id]), page, post.id)
+    url = '%spage/%d/#post-%d' % (
+        reverse('djangobb:topic',
+            kwargs={
+                'topic_id': post.topic.id,
+                'slug': post.topic.get_slug()
+        }), page, post.id)
     return HttpResponseRedirect(url)
 
 

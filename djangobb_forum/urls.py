@@ -65,7 +65,7 @@ urlpatterns = [
     # url('^topic/(?P<topic_id>\d+)/open_close/(?P<action>[c|o])/$', forum_views.open_close_topic, name='open_close_topic'),
 
     # # Post
-    # url('^post/(?P<post_id>\d+)/$', forum_views.show_post, name='post'),
+    url('^post/(?P<post_id>\d+)/$', forum_views.show_post, name='post'),
     # url('^post/(?P<post_id>\d+)/edit/$', forum_views.edit_post, name='edit_post'),
     # url('^post/(?P<post_id>\d+)/delete/$', forum_views.delete_post, name='delete_post'),
     # # Post preview
