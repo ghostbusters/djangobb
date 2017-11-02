@@ -1,6 +1,8 @@
+BeautifulSoup>=3.2.1
 Django>=1.8,<2.0
 django-haystack>=2.4,<2.5
 Pillow>=2.1.0
 postmarkup
 pygments
+-e git+https://github.com/chadpaulson/pyoembed.git@c7c97ab2135b2e827e5c6a572c5ffe6cd76544e1#egg=pyoembed
 pytz>=2015.4
