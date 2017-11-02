@@ -137,7 +137,7 @@ def oembed_parse(data):
     embeds = []
     for link in links:
         try:
-            oembed_data = oEmbed(link)
+            oembed_data = oEmbed(link['href'])
             if oembed_data.get('html'):
                 embeds.append('<p class="oembed">' + oembed_data['html'] + '</p>')
         except:
