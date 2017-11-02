@@ -10,6 +10,8 @@ except AttributeError:
     class HTMLParseError(Exception):
         pass
 
+from BeautifulSoup import BeautifulSoup
+from pyoembed import oEmbed
 from postmarkup import render_bbcode
 from json import JSONEncoder
 try:
@@ -126,6 +128,24 @@ class ExcludeTagsHTMLFilter(HTMLFilter):
             self.is_ignored = False
             HTMLFilter.handle_endtag(self, tag)
 
+def oembed_parse(data):
+    """
+    Iterate through links and embed relavant data while leaving the content intact.
+    """
+    soup = BeautifulSoup(data)
+    links = soup.findAll('a')
+    embeds = []
+    for link in links:
+        try:
+            oembed_data = oEmbed(link)
+            if oembed_data.get('html'):
+                embeds.append('<p class="oembed">' + oembed_data['html'] + '</p>')
+        except:
+            pass
+    if len(embeds):
+        for oembed in embeds:
+            data = data + oembed
+    return data
 
 def urlize(html):
     """
@@ -144,7 +164,7 @@ def urlize(html):
         if settings.DEBUG:
             raise
         return html
-    return urlized_html
+    return oembed_parse(urlized_html)
 
 def _smile_replacer(data):
     for smile, path in _SMILES:
