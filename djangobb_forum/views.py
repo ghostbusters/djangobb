@@ -857,10 +857,7 @@ def delete_subscription(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     topic.subscribers.remove(request.user)
     messages.info(request, _("Topic subscription removed."))
-    if 'from_topic' in request.GET:
-        return HttpResponseRedirect(reverse('djangobb:topic', args=[topic.id]))
-    else:
-        return HttpResponseRedirect(reverse('djangobb:forum_profile', args=[request.user.username]))
+    return HttpResponseRedirect(reverse('djangobb:topic', args=[topic.id]))
 
 
 @login_required
