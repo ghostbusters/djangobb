@@ -72,8 +72,8 @@ urlpatterns = [
     # url(r'^preview/$', forum_views.post_preview, name='post_preview'),
 
     # # Subscription
-    # url('^subscription/topic/(?P<topic_id>\d+)/delete/$', forum_views.delete_subscription, name='forum_delete_subscription'),
-    # url('^subscription/topic/(?P<topic_id>\d+)/add/$', forum_views.add_subscription, name='forum_add_subscription'),
+    url('^subscription/topic/(?P<topic_id>\d+)/delete/$', forum_views.delete_subscription, name='forum_delete_subscription'),
+    url('^subscription/topic/(?P<topic_id>\d+)/add/$', forum_views.add_subscription, name='forum_add_subscription'),
 
     # Feeds
     url(r'^feeds/posts/$', LastPosts(), name='forum_posts_feed'),
