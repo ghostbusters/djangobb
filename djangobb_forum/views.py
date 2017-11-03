@@ -857,7 +857,11 @@ def delete_subscription(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     topic.subscribers.remove(request.user)
     messages.info(request, _("Topic subscription removed."))
-    return HttpResponseRedirect(reverse('djangobb:topic', args=[topic.id]))
+    return HttpResponseRedirect(
+        reverse('djangobb:topic', kwargs={
+            'topic_id': topic.id,
+            'slug': topic.get_slug()
+        }))
 
 
 @login_required
@@ -866,7 +870,11 @@ def add_subscription(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     topic.subscribers.add(request.user)
     messages.success(request, _("Topic subscribed."))
-    return HttpResponseRedirect(reverse('djangobb:topic', args=[topic.id]))
+    return HttpResponseRedirect(
+        reverse('djangobb:topic', kwargs={
+            'topic_id': topic.id,
+            'slug': topic.get_slug()
+        }))
 
 
 @login_required
