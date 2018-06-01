@@ -60,14 +60,14 @@ urlpatterns = [
     url('^t/(?P<slug>[-\w]+)-(?P<topic_id>\d+)/page/(?P<page>\d+)/$', forum_views.show_topic, name='topic_pagination'),
     url('^(?P<forum_id>\d+)/topic/add/$', forum_views.add_topic, name='add_topic'),
     # url('^topic/(?P<topic_id>\d+)/delete_posts/$', forum_views.delete_posts, name='delete_posts'),
-    # url('^topic/move/$', forum_views.move_topic, name='move_topic'),
-    # url('^topic/(?P<topic_id>\d+)/stick_unstick/(?P<action>[s|u])/$', forum_views.stick_unstick_topic, name='stick_unstick_topic'),
-    # url('^topic/(?P<topic_id>\d+)/open_close/(?P<action>[c|o])/$', forum_views.open_close_topic, name='open_close_topic'),
+    url('^topic/move/$', forum_views.move_topic, name='move_topic'),
+    url('^topic/(?P<topic_id>\d+)/stick_unstick/(?P<action>[s|u])/$', forum_views.stick_unstick_topic, name='stick_unstick_topic'),
+    url('^topic/(?P<topic_id>\d+)/open_close/(?P<action>[c|o])/$', forum_views.open_close_topic, name='open_close_topic'),
 
     # # Post
     url('^post/(?P<post_id>\d+)/$', forum_views.show_post, name='post'),
-    # url('^post/(?P<post_id>\d+)/edit/$', forum_views.edit_post, name='edit_post'),
-    # url('^post/(?P<post_id>\d+)/delete/$', forum_views.delete_post, name='delete_post'),
+    url('^post/(?P<post_id>\d+)/edit/$', forum_views.edit_post, name='edit_post'),
+    url('^post/(?P<post_id>\d+)/delete/$', forum_views.delete_post, name='delete_post'),
     # # Post preview
     # url(r'^preview/$', forum_views.post_preview, name='post_preview'),
 
