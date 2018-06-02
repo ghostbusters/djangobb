@@ -13,7 +13,6 @@ from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from siteflags.models import ModelWithFlag
 
 import pytz
 
@@ -126,7 +125,7 @@ class Forum(models.Model):
 
 
 @python_2_unicode_compatible
-class Topic(models.Model, ModelWithFlag):
+class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name='topics', verbose_name=_('Forum'))
     name = models.CharField(_('Subject'), max_length=255)
     created = models.DateTimeField(_('Created'), auto_now_add=True)
@@ -209,7 +208,7 @@ class Topic(models.Model, ModelWithFlag):
 
 
 @python_2_unicode_compatible
-class Post(models.Model, ModelWithFlag):
+class Post(models.Model):
     topic = models.ForeignKey(Topic, related_name='posts', verbose_name=_('Topic'))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', verbose_name=_('User'))
     created = models.DateTimeField(_('Created'), auto_now_add=True)
