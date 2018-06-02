@@ -5,4 +5,4 @@ Pillow>=2.1.0
 postmarkup
 pygments
 pytz>=2015.4
-django-siteflags==0.5.0
+django-siteflags==0.4.2
